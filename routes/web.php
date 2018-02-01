@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::get('passport', 'PassportController@index')->name('passport.index');
+Route::get('/passport', 'PassportController@index')->name('passport.index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
