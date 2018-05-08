@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Repositories\ItemRepository;
-use App\Models\Item;
+use App\Repositories\UserItemRepository;
+use App\Models\UserItem;
 
-class ItemController extends Controller
+class UserItemController extends Controller
 {
 
-  public function __construct(ItemRepository $item_repository)
+  public function __construct(UserItemRepository $user_item_repository)
     {
         // $this->middleware('auth:api');
-        $this->items = $item_repository;
+        $this->users_items = $user_item_repository;
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return $this->items->index()->get();
+        return $this->users_items->index()->get();
     }
 
     /**
@@ -33,7 +33,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->items->store($request);
+        $request['user_id'] = $request->user()->id;
+        return $this->users_items->store($request);
     }
 
     /**
@@ -42,9 +43,9 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show(UserItem $user_item)
     {
-        return $item;
+        return $user_item;
     }
 
     /**
@@ -54,10 +55,10 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, UserItem $user_item)
     {
-        $item = $this->items->getById($id);
-        return $this->items->update($request, $item);
+        $request['user_id'] = $request->user()->id;
+        return $this->users_items->update($request, $user_item);
     }
 
     /**
@@ -68,6 +69,6 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        return $this->items->destroy($id);
+        return $this->users_items->destroy($id);
     }
 }

@@ -24,7 +24,13 @@ Route::post('items', 'ItemController@store')->name('item.store');
 Route::delete('items/{item}', 'ItemController@destroy')->name('item.destroy');
 
 Route::get('wallets', 'WalletController@index')->name('wallet.index');
-Route::get('wallets/{wallets}', 'WalletController@show')->name('wallet.show');
-Route::put('wallets/{wallets}', 'WalletController@update')->name('wallet.update');
+Route::get('wallets/{wallet}', 'WalletController@show')->name('wallet.show');
+Route::put('wallets/{wallet}', 'WalletController@update')->name('wallet.update');
 Route::post('wallets', 'WalletController@store')->name('wallet.store');
-Route::delete('wallets/{wallets}', 'WalletController@destroy')->name('wallet.destroy');
+Route::delete('wallets/{wallet}', 'WalletController@destroy')->name('wallet.destroy');
+
+Route::get('usersItems', 'UserItemController@index')->name('user_item.index');
+Route::get('usersItems/{user_item}', 'UserItemController@show')->name('wallet.show');
+Route::put('usersItems/{user_item}', 'UserItemController@update')->name('user_item.update');
+Route::post('usersItems', 'UserItemController@store')->name('user_item.store');
+Route::delete('usersItems/{user_item}', 'UserItemController@destroy')->name('user_item.destroy');

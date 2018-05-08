@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Repositories\WalletRepository;
+use App\Models\Wallet;
 
 class WalletController extends Controller
 {
@@ -41,9 +42,9 @@ class WalletController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Wallet $wallet)
     {
-        return $this->wallets->getById($id);
+        return $wallet;
     }
 
     /**
