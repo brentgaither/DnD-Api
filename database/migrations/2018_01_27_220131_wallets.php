@@ -15,11 +15,19 @@ class Wallets extends Migration
     {
       Schema::create('wallets', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('user_id')->unsigned();
           $table->integer('gold');
           $table->integer('silver');
           $table->integer('copper');
           $table->timestamps();
       });
+      Schema::table('wallets', function (Blueprint $table) {
+        $table->foreign('user_id')
+                 ->references('id')
+                 ->on('users')
+                 ->onDelete('cascade')
+                 ->onUpdate('cascade');
+               });
     }
 
     /**
