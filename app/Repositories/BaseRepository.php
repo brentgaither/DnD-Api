@@ -12,6 +12,16 @@ abstract class BaseRepository
     protected $model;
 
     /**
+     * Get all models
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function index()
+    {
+        return $this->model;
+    }
+
+    /**
      * Destroy a model.
      *
      * @param  int $id

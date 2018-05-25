@@ -36,6 +36,7 @@ $factory->define(App\Models\Wallet::class, function (Faker $faker) {
         'gold' => $faker->numberBetween($min = 1, $max = 30),
         'silver' => $faker->numberBetween($min = 1, $max = 30),
         'copper' => $faker->numberBetween($min = 1, $max = 30),
+        'user_id' => factory(App\Models\User::class)->create()->id
     ];
 });
 

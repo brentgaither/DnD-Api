@@ -13,9 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('items', 'ItemController@index')->name('item.index');
 Route::get('items/{item}', 'ItemController@show')->name('item.show');
@@ -28,6 +25,9 @@ Route::get('wallets/{wallet}', 'WalletController@show')->name('wallet.show');
 Route::put('wallets/{wallet}', 'WalletController@update')->name('wallet.update');
 Route::post('wallets', 'WalletController@store')->name('wallet.store');
 Route::delete('wallets/{wallet}', 'WalletController@destroy')->name('wallet.destroy');
+
+Route::get('users', 'UserController@index')->name('user.index');
+Route::get('user/', 'UserController@show')->name('user.show');
 
 Route::get('usersItems', 'UserItemController@index')->name('user_item.index');
 Route::get('usersItems/{user_item}', 'UserItemController@show')->name('wallet.show');

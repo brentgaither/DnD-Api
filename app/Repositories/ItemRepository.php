@@ -21,16 +21,6 @@ class ItemRepository extends BaseRepository
     }
 
     /**
-     * Get all the items
-     *
-     * @return Illuminate\Support\Collection
-     */
-    public function index()
-    {
-        return $this->model;
-    }
-
-    /**
      * Store a new item.
      *
      * @param  array $inputs

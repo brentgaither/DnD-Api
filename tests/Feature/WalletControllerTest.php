@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Wallet;
+use App\Models\User;
 
 class WalletControllerTest extends TestCase
 {
@@ -52,9 +53,11 @@ class WalletControllerTest extends TestCase
 
     public function testCreateWallet()
     {
+        $user = factory(User::class)->create();
         $new_wallet = ['gold' => 40,
                     'silver' => 20,
-                    'copper' => 10];
+                    'copper' => 10,
+                    'user_id' => $user->id];
         $response = $this->json('Post', '/api/wallets/', $new_wallet);
         $response
             ->assertStatus(200)
@@ -70,10 +73,12 @@ class WalletControllerTest extends TestCase
 
     public function testUpdateWallet()
     {
+
+      $wallet = factory(Wallet::class)->create();
       $new_wallet = ['gold' => 40,
                   'silver' => 12,
-                  'copper' => 10];
-      $wallet = factory(Wallet::class)->create();
+                  'copper' => 10,
+                  'user_id' => $wallet->user_id];
       $response = $this->json('Put', '/api/wallets/' . $wallet->id, $new_wallet);
       $response
           ->assertStatus(200)

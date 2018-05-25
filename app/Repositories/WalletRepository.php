@@ -21,16 +21,6 @@ class WalletRepository extends BaseRepository
     }
 
     /**
-     * Get all the wallets
-     *
-     * @return Illuminate\Support\Collection
-     */
-    public function index()
-    {
-        return $this->model;
-    }
-
-    /**
      * Store a new wallet.
      *
      * @param  array $inputs
@@ -55,6 +45,7 @@ class WalletRepository extends BaseRepository
         $wallet->gold = $inputs['gold'];
         $wallet->silver = $inputs['silver'];
         $wallet->copper = $inputs['copper'];
+        $wallet->user_id = $inputs['user_id'];
         $wallet->save();
         return $wallet;
     }
