@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('diaries', 'DiaryController@index')->name('diary.index');
+Route::get('diaries/{diary}', 'DiaryController@show')->name('diary.show');
+Route::put('diaries/{diary}', 'DiaryController@update')->name('diary.update');
+Route::post('diaries', 'DiaryController@store')->name('diary.store');
+Route::delete('diaries/{diary}', 'DiaryController@destroy')->name('diary.destroy');
 
 Route::get('items', 'ItemController@index')->name('item.index');
 Route::get('items/{item}', 'ItemController@show')->name('item.show');
