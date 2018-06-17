@@ -47,3 +47,11 @@ $factory->define(App\Models\UserItem::class, function (Faker $faker) {
         'quantity' => $faker->numberBetween($min = 1, $max = 30)
     ];
 });
+
+$factory->define(App\Models\Diary::class, function (Faker $faker) {
+    return [
+        'title' => $faker->word,
+        'description' => $faker->sentence,
+        'user_id' => factory(App\Models\User::class)->create()->id
+    ];
+});
