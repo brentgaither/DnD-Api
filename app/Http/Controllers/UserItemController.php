@@ -12,7 +12,7 @@ class UserItemController extends Controller
 
   public function __construct(UserItemRepository $user_item_repository)
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
         $this->users_items = $user_item_repository;
     }
     /**

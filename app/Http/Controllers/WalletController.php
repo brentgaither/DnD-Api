@@ -12,7 +12,7 @@ class WalletController extends Controller
 
   public function __construct(WalletRepository $wallet_repository)
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
         $this->wallets = $wallet_repository;
     }
     /**
