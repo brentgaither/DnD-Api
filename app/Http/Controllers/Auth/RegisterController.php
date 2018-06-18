@@ -34,9 +34,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(WalletRepository $wallet_repository)
     {
         $this->middleware('guest');
+        $this->wallets = $wallet_repository;
     }
 
     /**
@@ -62,10 +63,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        $inputs['user_id'] = $user->id;
+        $inputs['gold'] = 0;
+        $inputs['silver'] = 0;
+        $inputs['copper'] = 0;
+        $this->wallets->store($inputs);
+        return $user;
     }
 }

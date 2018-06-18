@@ -32,7 +32,6 @@ class DiaryRepository extends BaseRepository
     {
         $diary = new $this->model;
         // Fake the user id for the moment
-        $inputs['user_id'] = User::first()->id;
         $diary = $this->save($diary, $inputs);
         return $diary;
     }
