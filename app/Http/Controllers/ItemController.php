@@ -12,7 +12,7 @@ class ItemController extends Controller
 
   public function __construct(ItemRepository $item_repository)
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
         $this->items = $item_repository;
     }
     /**
@@ -20,9 +20,10 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $r)
+    public function index(Request $request)
     {
-        return $this->items->index()->get();
+        $query = $request['q'] ?? '';
+        return $this->items->seachByName($query)->get();
     }
 
     /**

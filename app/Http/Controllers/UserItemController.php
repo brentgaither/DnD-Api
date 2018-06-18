@@ -20,9 +20,10 @@ class UserItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->users_items->index()->get();
+        $user = $request->user();
+        return $this->users_items->userIndex($user->id)->get();
     }
 
     /**
@@ -34,6 +35,7 @@ class UserItemController extends Controller
     public function store(Request $request)
     {
         $request['user_id'] = $request->user()->id;
+        $request['item_id'] = $request['itemId'];
         return $this->users_items->store($request);
     }
 

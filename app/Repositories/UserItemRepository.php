@@ -20,6 +20,16 @@ class UserItemRepository extends BaseRepository
         $this->model = $user_items;
     }
 
+    public function getById($id)
+    {
+      return $this->model->where('id', $id)->with('item');
+    }
+
+    public function userIndex($user_id)
+    {
+      return $this->model->where('user_id', $user_id)->with('item');
+    }
+
     /**
      * Store a new item.
      *

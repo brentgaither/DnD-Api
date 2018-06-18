@@ -26,7 +26,7 @@ Route::post('items', 'ItemController@store')->name('item.store');
 Route::delete('items/{item}', 'ItemController@destroy')->name('item.destroy');
 
 Route::get('wallets', 'WalletController@index')->name('wallet.index');
-Route::get('wallets/{wallet}', 'WalletController@show')->name('wallet.show');
+Route::get('wallets/user', 'WalletController@show')->name('wallet.show');
 Route::put('wallets/{wallet}', 'WalletController@update')->name('wallet.update');
 Route::post('wallets', 'WalletController@store')->name('wallet.store');
 Route::delete('wallets/{wallet}', 'WalletController@destroy')->name('wallet.destroy');

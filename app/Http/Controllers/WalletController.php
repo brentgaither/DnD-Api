@@ -42,8 +42,9 @@ class WalletController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Wallet $wallet)
+    public function show(Request $request)
     {
+        $wallet = $this->wallets->getByUserId($request->user()->id);
         return $wallet;
     }
 

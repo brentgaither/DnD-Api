@@ -28,6 +28,7 @@ $factory->define(App\Models\Item::class, function (Faker $faker) {
         'name' => $faker->word,
         'description' => $faker->sentence,
         'weight' => $faker->numberBetween($min = 1, $max = 30),
+        'cost' => $faker->numberBetween($min = 1, $max = 30),
     ];
 });
 

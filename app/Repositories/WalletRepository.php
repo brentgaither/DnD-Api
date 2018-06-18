@@ -20,6 +20,11 @@ class WalletRepository extends BaseRepository
         $this->model = $wallets;
     }
 
+    public function getByUserId($user_id)
+    {
+      return $this->model->where('user_id', $user_id)->first();
+    }
+
     /**
      * Store a new wallet.
      *

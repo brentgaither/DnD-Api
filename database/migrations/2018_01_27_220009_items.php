@@ -16,8 +16,10 @@ class Items extends Migration
       Schema::create('items', function (Blueprint $table) {
           $table->increments('id');
           $table->string('name');
-          $table->string('description');
+          $table->string('description')->nullable();
           $table->decimal('weight', 8, 2);
+          $table->integer('cost');
+          $table->enum('currency', ['cp', 'sp', 'gp']);
           $table->timestamps();
       });
     }

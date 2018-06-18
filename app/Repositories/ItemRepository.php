@@ -21,6 +21,17 @@ class ItemRepository extends BaseRepository
     }
 
     /**
+     * Create a new item Repository instance.
+     *
+     * @param  string $query
+     * @return Collection \App\Models\Item
+     */
+    public function seachByName($query)
+    {
+      return $this->model->where('name', 'like', "%" . $query . "%");
+    }
+
+    /**
      * Store a new item.
      *
      * @param  array $inputs
@@ -45,6 +56,7 @@ class ItemRepository extends BaseRepository
         $item->name = $inputs['name'];
         $item->description = $inputs['description'];
         $item->weight = $inputs['weight'];
+        $item->currency = $inputs['currency'];
         $item->save();
         return $item;
     }

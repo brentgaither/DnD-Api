@@ -10,7 +10,7 @@ class DiaryController extends Controller
 {
   public function __construct(DiaryRepository $diary_repository)
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
         $this->diaries = $diary_repository;
     }
     /**
@@ -31,6 +31,7 @@ class DiaryController extends Controller
      */
     public function store(Request $request)
     {
+        $request['user_id'] = $request->user()->id;
         return $this->diaries->store($request);
     }
 
