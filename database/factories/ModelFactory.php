@@ -29,6 +29,7 @@ $factory->define(App\Models\Item::class, function (Faker $faker) {
         'description' => $faker->sentence,
         'weight' => $faker->numberBetween($min = 1, $max = 30),
         'cost' => $faker->numberBetween($min = 1, $max = 30),
+        'currency' => $faker->randomElement(['cp' ,'sp', 'gp'])
     ];
 });
 
@@ -53,6 +54,16 @@ $factory->define(App\Models\Diary::class, function (Faker $faker) {
     return [
         'title' => $faker->word,
         'description' => $faker->sentence,
+        'user_id' => factory(App\Models\User::class)->create()->id
+    ];
+});
+
+
+$factory->define(App\Models\Character::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'armourClass' => $faker->numberBetween($min = 1, $max = 30),
+        'hitPoints' => $faker->numberBetween($min = 1, $max = 30),
         'user_id' => factory(App\Models\User::class)->create()->id
     ];
 });

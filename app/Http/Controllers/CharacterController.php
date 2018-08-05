@@ -4,26 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Repositories\UserItemRepository;
-use App\Models\UserItem;
+use App\Repositories\CharacterRepository;
+use App\Models\Character;
 
-class UserItemController extends Controller
+class CharacterController extends Controller
 {
 
-  public function __construct(UserItemRepository $user_item_repository)
+  public function __construct(CharacterRepository $character_repository)
     {
         $this->middleware('auth:api');
-        $this->users_items = $user_item_repository;
+        $this->characters = $character_repository;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
-        return $this->users_items->userIndex($user->id)->get();
+        return $this->characters->index()->get();
     }
 
     /**
@@ -34,9 +33,7 @@ class UserItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request['user_id'] = $request->user()->id;
-        $request['item_id'] = $request['itemId'] ?? $request['item_id'];
-        return $this->users_items->store($request);
+        return $this->characters->store($request);
     }
 
     /**
@@ -45,9 +42,9 @@ class UserItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(UserItem $user_item)
+    public function show(Character $character)
     {
-        return $user_item;
+        return $character;
     }
 
     /**
@@ -57,10 +54,10 @@ class UserItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserItem $user_item)
+    public function update(Request $request, $id)
     {
-        $request['user_id'] = $request->user()->id;
-        return $this->users_items->update($request, $user_item);
+        $character = $this->characters->getById($id);
+        return $this->characters->update($request, $character);
     }
 
     /**
@@ -71,6 +68,6 @@ class UserItemController extends Controller
      */
     public function destroy($id)
     {
-        return $this->users_items->destroy($id);
+        return $this->characters->destroy($id);
     }
 }

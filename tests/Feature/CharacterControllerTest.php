@@ -5,107 +5,118 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Diary;
+use App\Models\Character;
 use App\Models\User;
 
-class DiaryControllerTest extends TestCase
+class characterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testGetDiaries()
+    public function testGetCharacters()
     {
         $user = factory(User::class)->create();
-        factory(Diary::class)->create();
+        factory(Character::class)->create();
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Get', '/api/diaries');
+        ->json('Get', '/api/characters');
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' => [
                 'id',
-                'title',
-                'description',
+                'user_id',
+                'name',
+                'armourClass',
+                'hitPoints',
                 'created_at',
                 'updated_at'
             ]]);
     }
 
-    public function testGetDiary()
+    public function testGetCharacter()
     {
         $user = factory(User::class)->create();
-        $diary = factory(Diary::class)->create();
+        $character = factory(Character::class)->create();
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Get', '/api/diaries/' . $diary->id);
+        ->json('Get', '/api/characters/' . $character->id);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
                 'id',
-                'title',
-                'description',
+                'user_id',
+                'name',
+                'armourClass',
+                'hitPoints',
                 'created_at',
                 'updated_at'
             ]);
     }
 
-    public function testGetDiaryMissing()
+    public function testGetCharacterMissing()
     {
         $user = factory(User::class)->create();
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Get', '/api/diaries/' . 1);
+        ->json('Get', '/api/characters/' . 1);
         $response
             ->assertStatus(404);
     }
 
-    public function testCreateDiary()
+    public function testCreateCharacter()
     {
         $user = factory(User::class)->create();
-        $new_diary = ['title' => 'cool adventure',
-                    'description' => 'Neato, were out here!',
+        $new_character = ['name' => 'tough guy',
+                    'armourClass' => 20,
+                    'hitPoints' => 30,
                     'user_id' => $user->id];
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Post', '/api/diaries/', $new_diary);
+        ->json('Post', '/api/characters/', $new_character);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
                 'id',
-                'title',
-                'description',
+                'user_id',
+                'name',
+                'armourClass',
+                'hitPoints',
                 'created_at',
                 'updated_at'
             ]);
     }
 
-    public function testUpdateDiary()
+    public function testUpdatecharacter()
     {
         $user = factory(User::class)->create();
-        $new_diary = ['title' => 'updated adventure',
-                    'description' => 'Neato, were really killing dragons',
-                    'weight' => 10];
-        $diary = factory(Diary::class)->create();
+        $character = factory(Character::class)->create();
+
+        $new_character = ['name' => 40,
+                    'hitPoints' => 12,
+                    'armourClass' => 10,
+                    'user_id' => $character->user_id];
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Put', '/api/diaries/' . $diary->id, $new_diary);
+        ->json('Put', '/api/characters/' . $character->id, $new_character);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
                 'id',
-                'title',
-                'description',
+                'user_id',
+                'name',
+                'armourClass',
+                'hitPoints',
                 'created_at',
                 'updated_at'
             ]);
     }
 
-    public function testDeleteDiary()
+    public function testDeletecharacter()
     {
         $user = factory(User::class)->create();
-        $diary = factory(Diary::class)->create();
+        $character = factory(Character::class)->create();
         $response = $this
         ->actingAs($user, 'api')
-        ->json('Delete', '/api/diaries/' . $diary->id);
+        ->json('Delete', '/api/characters/' . $character->id);
         $response
             ->assertStatus(200);
     }

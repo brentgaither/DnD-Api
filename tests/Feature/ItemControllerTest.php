@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Item;
+use App\Models\User;
 
 class ItemControllerTest extends TestCase
 {
@@ -13,8 +14,11 @@ class ItemControllerTest extends TestCase
 
     public function testGetItems()
     {
+        $user = factory(User::class)->create();
         factory(Item::class)->create();
-        $response = $this->json('Get', '/api/items');
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/items');
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' => [
@@ -29,8 +33,11 @@ class ItemControllerTest extends TestCase
 
     public function testGetItem()
     {
+        $user = factory(User::class)->create();
         $item = factory(Item::class)->create();
-        $response = $this->json('Get', '/api/items/' . $item->id);
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/items/' . $item->id);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
@@ -45,17 +52,26 @@ class ItemControllerTest extends TestCase
 
     public function testGetItemMissing()
     {
-        $response = $this->json('Get', '/api/items/' . 1);
+        $user = factory(User::class)->create();
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/items/' . 1);
         $response
             ->assertStatus(404);
     }
 
     public function testCreateItem()
     {
+        $user = factory(User::class)->create();
         $new_item = ['name' => 'cool item',
                     'description' => 'Neato item',
-                    'weight' => 10];
-        $response = $this->json('Post', '/api/items/', $new_item);
+                    'weight' => 10,
+                    'cost' => 10,
+                    'currency' => 'sp'
+                ];
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Post', '/api/items/', $new_item);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
@@ -70,28 +86,39 @@ class ItemControllerTest extends TestCase
 
     public function testUpdateItem()
     {
-      $new_item = ['name' => 'updated item',
-                  'description' => 'Neato item',
-                  'weight' => 10];
-      $item = factory(Item::class)->create();
-      $response = $this->json('Put', '/api/items/' . $item->id, $new_item);
-      $response
-          ->assertStatus(200)
-          ->assertJsonStructure([ '*' =>
-              'id',
-              'name',
-              'description',
-              'weight',
-              'created_at',
-              'updated_at'
-          ]);
+        $user = factory(User::class)->create();
+        $new_item = ['name' => 'updated item',
+                    'description' => 'Neato item',
+                    'weight' => 10,
+                    'cost' => 10,
+                    'currency' => 'sp'
+                ];
+        $item = factory(Item::class)->create();
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Put', '/api/items/' . $item->id, $new_item);
+        $response
+             ->assertStatus(200)
+            ->assertJsonStructure([ '*' =>
+                'id',
+                'name',
+                'description',
+                'weight',
+                'cost',
+                'currency',
+                'created_at',
+                'updated_at'
+            ]);
     }
 
     public function testDeleteItem()
     {
-      $item = factory(Item::class)->create();
-      $response = $this->json('Delete', '/api/items/' . $item->id);
-      $response
-          ->assertStatus(200);
-    }
+        $user = factory(User::class)->create();
+        $item = factory(Item::class)->create();
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Delete', '/api/items/' . $item->id);
+        $response
+            ->assertStatus(200);
+        }
 }

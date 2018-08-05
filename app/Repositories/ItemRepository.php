@@ -57,6 +57,7 @@ class ItemRepository extends BaseRepository
         $item->description = $inputs['description'];
         $item->weight = $inputs['weight'];
         $item->currency = $inputs['currency'];
+        $item->cost = $inputs['cost'];
         $item->save();
         return $item;
     }

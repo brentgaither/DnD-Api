@@ -21,7 +21,9 @@ class UserItemControllerTest extends TestCase
           ['user_id' => $user->id,
            'item_id' => $item->id]
         );
-        $response = $this->json('Get', '/api/usersItems');
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/usersItems');
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' => [
@@ -42,7 +44,9 @@ class UserItemControllerTest extends TestCase
           ['user_id' => $user->id,
            'item_id' => $item->id]
         );
-        $response = $this->json('Get', '/api/usersItems/' . $user_item->id);
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/usersItems/' . $user_item->id);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([ '*' =>
@@ -57,7 +61,10 @@ class UserItemControllerTest extends TestCase
 
     public function testGetUserItemMissing()
     {
-        $response = $this->json('Get', '/api/usersItems/' . 1);
+        $user = factory(User::class)->create();
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/usersItems/' . 1);
         $response
             ->assertStatus(404);
     }
@@ -70,7 +77,7 @@ class UserItemControllerTest extends TestCase
                     'item_id' => $item->id,
                     'quantity' => 10];
         $response = $this
-                    ->actingAs($user)
+                    ->actingAs($user, 'api')
                     ->json('Post', '/api/usersItems/', $new_user_item);
         $response
             ->assertStatus(200)
@@ -94,7 +101,7 @@ class UserItemControllerTest extends TestCase
         );
       $new_user_item = ['quantity' => 10];
       $response = $this
-                ->actingAs($user)
+                ->actingAs($user, 'api')
                 ->json('Put', '/api/usersItems/' . $user_item->id, $new_user_item);
       $response
           ->assertStatus(200)
@@ -116,7 +123,9 @@ class UserItemControllerTest extends TestCase
           ['user_id' => $user->id,
            'item_id' => $item->id]
         );
-      $response = $this->json('Delete', '/api/usersItems/' . $user_item->id);
+      $response = $this
+      ->actingAs($user, 'api')
+      ->json('Delete', '/api/usersItems/' . $user_item->id);
       $response
           ->assertStatus(200);
     }
