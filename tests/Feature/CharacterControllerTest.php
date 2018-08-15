@@ -32,6 +32,27 @@ class characterControllerTest extends TestCase
             ]]);
     }
 
+    public function testGetMyCharacter()
+    {
+        $user = factory(User::class)->create();
+        $character = factory(Character::class)->create(['user_id' => $user->id]);
+
+        $response = $this
+        ->actingAs($user, 'api')
+        ->json('Get', '/api/characters/mine/' . $user->id);
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure( [
+                'id',
+                'user_id',
+                'name',
+                'armourClass',
+                'hitPoints',
+                'created_at',
+                'updated_at'
+            ]);
+    }
+
     public function testGetCharacter()
     {
         $user = factory(User::class)->create();

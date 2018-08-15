@@ -47,6 +47,17 @@ class CharacterController extends Controller
         return $character;
     }
 
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showMine(int $user_id)
+    {
+        return $this->characters->getByUserId($user_id);
+    }
+
     /**
      * Update the specified resource in storage.
      *

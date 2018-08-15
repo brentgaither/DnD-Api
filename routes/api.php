@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('characters', 'CharacterController@index')->name('character.index');
+Route::get('characters/mine/{user_id}', 'CharacterController@showMine')->name('character.showMine');
 Route::get('characters/{character}', 'CharacterController@show')->name('character.show');
 Route::put('characters/{character}', 'CharacterController@update')->name('character.update');
 Route::post('characters', 'CharacterController@store')->name('character.store');
