@@ -48,8 +48,11 @@ class CharacterRepository extends BaseRepository
     private function save(Character $character, $inputs)
     {
         $character->name = $inputs['name'];
-        $character->armourClass = $inputs['armourClass'];
-        $character->hitPoints = $inputs['hitPoints'];
+        $character->armour_class = $inputs['armour_class'];
+        $character->hit_points = $inputs['hit_points'];
+        $character->strength = $inputs['strength'];
+        $character->wisdom = $inputs['wisdom'];
+        $character->intelligence = $inputs['intelligence'];
         if(isset($inputs['user_id'])){
           $character->user_id = $inputs['user_id'];
         }

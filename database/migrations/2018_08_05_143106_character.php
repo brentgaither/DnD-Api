@@ -17,8 +17,11 @@ class Character extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name');
-            $table->integer('armourClass');
-            $table->integer('hitPoints');
+            $table->integer('armour_class');
+            $table->integer('hit_points');
+            $table->integer('strength');
+            $table->integer('intelligence');
+            $table->integer('wisdom');
             $table->timestamps();
         });
         Schema::table('characters', function (Blueprint $table) {
